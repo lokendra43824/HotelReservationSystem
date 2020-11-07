@@ -12,15 +12,16 @@ namespace HotelReservation
             bool val = true;
             while (val)
             {
-                Console.WriteLine("Choose among the following option\n1.Add Hotel\n2.Display Hotel\n3.Exit\n4.Find Cheapest Hotel");
+                Console.WriteLine("Choose among the following option\n1.Add Hotel\n2.Display Hotel\n3.Exit\n4.Find Cheapest Hotel" +
+                    "\n5.Retrieve Ratings");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
                     case 1:
                         {
-                            manager.AddHotel(new Hotel("Bridgewood", 150, 50));
-                            manager.AddHotel(new Hotel("Ridgewood", 220, 150));
-                            manager.AddHotel(new Hotel("Lakewood", 110, 90));
+                            manager.AddHotel(new Hotel("Bridgewood", 150, 50, 4));
+                            manager.AddHotel(new Hotel("Ridgewood", 220, 150, 5));
+                            manager.AddHotel(new Hotel("Lakewood", 110, 90, 3));
                             break;
                         }
 
@@ -47,6 +48,18 @@ namespace HotelReservation
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
                             }
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            List<int> ratingList = new List<int>();
+                            ratingList = manager.RetrieveHotelRatings();
+                            foreach (var rating in ratingList)
+                            {
+                                Console.Write(rating + "\t");
+                            }
+                            Console.WriteLine("\n");
                             break;
                         }
 

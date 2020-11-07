@@ -16,9 +16,9 @@ namespace NUnitTestProject1
         public void AddingListofHotels_ShouldReturn_CountofHotelsinList()
         {
             HotelManager manager = new HotelManager();
-            manager.AddHotel(new Hotel("Lakewood", 110, 80));
-            manager.AddHotel(new Hotel("Bridgewood", 160, 120));
-            manager.AddHotel(new Hotel("Ridgewood", 220, 180));
+            manager.AddHotel(new Hotel("Lakewood", 110, 80, 3));
+            manager.AddHotel(new Hotel("Bridgewood", 160, 120, 4));
+            manager.AddHotel(new Hotel("Ridgewood", 220, 180, 5));
 
             int actual = manager.hotelList.Count;
             Assert.AreEqual(3, actual);
@@ -40,11 +40,11 @@ namespace NUnitTestProject1
 
             Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
             actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
-           
+
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
-            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90), 220);
-          
-            Assert.AreEqual(expectedCheapHotelList, actualCheapHotelList);
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 220);
+
+            CollectionAssert.AreEqual(expectedCheapHotelList, actualCheapHotelList);
         }
 
         /// <summary>
@@ -64,10 +64,25 @@ namespace NUnitTestProject1
             actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
-            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90), 200);
-            expectedCheapHotelList.Add(new Hotel("Bridgewood", 220, 150), 200);
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 200);
+            expectedCheapHotelList.Add(new Hotel("Bridgewood", 220, 150, 4), 200);
 
-            Assert.AreEqual(expectedCheapHotelList, actualCheapHotelList);
+            CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
+        }
+
+        [Test]
+        public void GiventheListofHotels_ShouldReturn_TheirRatings()
+        {
+            HotelManager manager = new HotelManager();
+            manager.CreateHotelList();
+
+            List<int> ratingList = new List<int>();
+            ratingList = manager.RetrieveHotelRatings();
+
+            List<int> expectedRatingList = new List<int>() { 3, 4, 5 };
+
+            CollectionAssert.AreEqual(ratingList, expectedRatingList);
+
         }
 
 

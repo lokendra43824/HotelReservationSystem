@@ -14,14 +14,14 @@ namespace HotelReservation
             {
                 hotelList.Add(newHotel);
             }
-            else { Console.WriteLine("Hotel already exists"); }
+            else { Console.WriteLine("Hole already exists"); }
         }
 
         public void CreateHotelList()
         {
-            hotelList.Add(new Hotel("Lakewood", 110, 90));
-            hotelList.Add(new Hotel("Bridgewood", 150, 50));
-            hotelList.Add(new Hotel("Ridgewood", 220, 190));
+            hotelList.Add(new Hotel("Lakewood", 110, 90, 3));
+            hotelList.Add(new Hotel("Bridgewood", 150, 50, 4));
+            hotelList.Add(new Hotel("Ridgewood", 220, 190, 5));
         }
 
         public void DisplayHotels()
@@ -72,6 +72,17 @@ namespace HotelReservation
                     totalCost += weekdayRate;
             }
             return totalCost;
+        }
+
+        public List<int> RetrieveHotelRatings()
+        {
+            List<int> ratingList = new List<int>();
+            int i = 0;
+            foreach (var hotel in hotelList)
+            {
+                ratingList.Add(hotel.rating);
+            }
+            return ratingList;
         }
     }
 }
