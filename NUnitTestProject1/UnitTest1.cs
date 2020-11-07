@@ -16,9 +16,9 @@ namespace NUnitTestProject1
         public void AddingListofHotels_ShouldReturn_CountofHotelsinList()
         {
             HotelManager manager = new HotelManager();
-            manager.AddHotel(new Hotel("Lakewood", 110, 80, 3));
-            manager.AddHotel(new Hotel("Bridgewood", 160, 120, 4));
-            manager.AddHotel(new Hotel("Ridgewood", 220, 180, 5));
+            manager.AddHotel(new Hotel("Lakewood", 110, 80, 80, 80, 3));
+            manager.AddHotel(new Hotel("Bridgewood", 160, 120, 100, 40, 4));
+            manager.AddHotel(new Hotel("Ridgewood", 220, 180, 110, 50, 5));
 
             int actual = manager.hotelList.Count;
             Assert.AreEqual(3, actual);
@@ -42,7 +42,7 @@ namespace NUnitTestProject1
             actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
-            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 220);
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 220);
 
             CollectionAssert.AreEqual(expectedCheapHotelList, actualCheapHotelList);
         }
@@ -64,8 +64,8 @@ namespace NUnitTestProject1
             actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
-            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 200);
-            expectedCheapHotelList.Add(new Hotel("Bridgewood", 220, 150, 4), 200);
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 200);
+            expectedCheapHotelList.Add(new Hotel("Bridgewood", 160, 120, 100, 40, 4), 200);
 
             CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
         }
@@ -103,8 +103,8 @@ namespace NUnitTestProject1
             actualCheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
-            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 200);
-            expectedCheapHotelList.Add(new Hotel("Bridgewood", 220, 150, 4), 200);
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 200);
+            expectedCheapHotelList.Add(new Hotel("Bridgewood", 160, 120, 100, 40, 4), 200);
 
             CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
         }
@@ -115,3 +115,4 @@ namespace NUnitTestProject1
 
     }
 }
+

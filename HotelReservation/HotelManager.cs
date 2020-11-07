@@ -19,9 +19,9 @@ namespace HotelReservation
 
         public void CreateHotelList()
         {
-            hotelList.Add(new Hotel("Lakewood", 110, 90, 3));
-            hotelList.Add(new Hotel("Bridgewood", 150, 50, 4));
-            hotelList.Add(new Hotel("Ridgewood", 220, 190, 5));
+            hotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3));
+            hotelList.Add(new Hotel("Bridgewood", 160, 120, 100, 40, 4));
+            hotelList.Add(new Hotel("Ridgewood", 220, 190, 110, 50, 5));
         }
 
         public void DisplayHotels()

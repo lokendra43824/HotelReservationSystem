@@ -19,9 +19,9 @@ namespace HotelReservation
                 {
                     case 1:
                         {
-                            manager.AddHotel(new Hotel("Bridgewood", 150, 50, 4));
-                            manager.AddHotel(new Hotel("Ridgewood", 220, 150, 5));
-                            manager.AddHotel(new Hotel("Lakewood", 110, 90, 3));
+                            manager.AddHotel(new Hotel("Bridgewood", 150, 50, 110, 50, 4));
+                            manager.AddHotel(new Hotel("Ridgewood", 220, 150, 100, 40, 5));
+                            manager.AddHotel(new Hotel("Lakewood", 110, 90, 80, 80, 3));
                             break;
                         }
 
