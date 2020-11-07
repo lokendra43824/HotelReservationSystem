@@ -39,7 +39,7 @@ namespace NUnitTestProject1
             DateTime endDate = Convert.ToDateTime("11Sep2020");
 
             Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
-            actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
+            actualCheapHotelList = manager.FindCheapHotel(startDate, endDate, 0);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
             expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 220);
@@ -61,7 +61,7 @@ namespace NUnitTestProject1
             DateTime endDate = Convert.ToDateTime("12Sep2020");
 
             Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
-            actualCheapHotelList = manager.FindCheapHotel(startDate, endDate);
+            actualCheapHotelList = manager.FindCheapHotel(startDate, endDate, 0);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
             expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 200);
@@ -100,11 +100,35 @@ namespace NUnitTestProject1
             DateTime endDate = Convert.ToDateTime("12Sep2020");
 
             Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
-            actualCheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate);
+            actualCheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, 0);
 
             Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
             expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3), 200);
             expectedCheapHotelList.Add(new Hotel("Bridgewood", 160, 120, 100, 40, 4), 200);
+
+            CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
+        }
+
+
+        /// <summary>
+        /// Test case to check for correct output list of cheap hotels for weekdays & weekends
+        /// date range includes both weekdays and weekends 
+        /// should return results considering ratings as well FOR A REWARD CUSTOMER
+        /// </summary>
+        [Test]
+        public void GivenStart_EndDates_Type_ShouldReturn_CheapestHotelForWeekendandWeekdaysREWARD()
+        {
+            HotelManager manager = new HotelManager();
+            manager.CreateHotelList();
+
+            DateTime startDate = Convert.ToDateTime("11Sep2020");
+            DateTime endDate = Convert.ToDateTime("12Sep2020");
+
+            Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
+            actualCheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, 1);
+
+            Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
+            expectedCheapHotelList.Add(new Hotel("Ridgewood", 220, 190, 110, 50, 3), 140);
 
             CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
         }

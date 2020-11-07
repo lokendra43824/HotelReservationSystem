@@ -17,7 +17,8 @@ namespace HotelReservation
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
-                    case 1:
+
+                    case 1:     ////Adds hotels to HotelList
                         {
                             manager.AddHotel(new Hotel("Bridgewood", 150, 50, 110, 50, 4));
                             manager.AddHotel(new Hotel("Ridgewood", 220, 150, 100, 40, 5));
@@ -25,25 +26,31 @@ namespace HotelReservation
                             break;
                         }
 
-                    case 2:
+                    case 2:     ////Displays all the hotels in the HotelList
                         {
                             manager.DisplayHotels();
                             break;
                         }
 
-                    case 3:
+                    case 3:     ////Exits the program
                         {
                             val = false;
                             break;
                         }
 
-                    case 4:
+                    case 4:     ////Take CustomerType,startDate and endDate inputs from user and call findCheapHotel method(NO ratings)
                         {
+                            Console.WriteLine("Enter 1 for Reward Customer and 0 for Regular Customer");
+                            int type = Convert.ToInt32(Console.ReadLine());
+                            if (type != 0 || type != 1)
+                            {
+                                throw new HotelException(HotelException.ExceptionType.INVALID_CUSTOMER_TYPE, "Invalid Customer Type");
+                            }
                             Console.WriteLine("Enter the startDate");
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate);
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate, type);
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
@@ -51,7 +58,7 @@ namespace HotelReservation
                             break;
                         }
 
-                    case 5:
+                    case 5:     ////Displays all the Hotels with their ratings
                         {
                             List<int> ratingList = new List<int>();
                             ratingList = manager.RetrieveHotelRatings();
@@ -63,13 +70,19 @@ namespace HotelReservation
                             break;
                         }
 
-                    case 6:
+                    case 6:    ////Take CustomerType,startDate and endDate inputs from user and call findCheapHotel method(considering ratings)
                         {
+                            Console.WriteLine("Enter 1 for Reward Customer and 0 for Regular Customer");
+                            int type = Convert.ToInt32(Console.ReadLine());
+                            if (type != 0 || type != 1)
+                            {
+                                throw new HotelException(HotelException.ExceptionType.INVALID_CUSTOMER_TYPE, "Invalid Customer Type");
+                            }
                             Console.WriteLine("Enter the startDate");
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate);
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, type);
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);

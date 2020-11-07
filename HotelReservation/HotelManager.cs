@@ -6,8 +6,15 @@ namespace HotelReservation
 {
     public class HotelManager
     {
+        /// <summary>
+        /// List of Hotels of type Hotel
+        /// </summary>
         public List<Hotel> hotelList = new List<Hotel>();
 
+        /// <summary>
+        /// Manual adding of Hotels in the HotelList
+        /// </summary>
+        /// <param name="newHotel"></param>
         public void AddHotel(Hotel newHotel)
         {
             if (!hotelList.Contains(newHotel))
@@ -17,6 +24,10 @@ namespace HotelReservation
             else { Console.WriteLine("Hole already exists"); }
         }
 
+        /// <summary>
+        /// Method to add Default Hotels to the List
+        /// Specifically used in Testing
+        /// </summary>
         public void CreateHotelList()
         {
             hotelList.Add(new Hotel("Lakewood", 110, 90, 80, 80, 3));
@@ -24,16 +35,29 @@ namespace HotelReservation
             hotelList.Add(new Hotel("Ridgewood", 220, 190, 110, 50, 5));
         }
 
+        /// <summary>
+        /// Method to details Rates of each Hotel
+        /// </summary>
         public void DisplayHotels()
         {
-            Console.WriteLine("Name\tWeekday Rate\tWeekend Rate");
+            Console.WriteLine("Name\tRegualr Weekday Rate\tREgular Weekend Rate\tReward Weekday Rate\tReward Weekend Rate\tCustomer Rating");
             foreach (var hotel in hotelList)
             {
-                Console.WriteLine(hotel.hotelName + "\t" + hotel.weekdayRate + "\t" + hotel.weekendRate);
+                Console.WriteLine(hotel.hotelName + "\t" + hotel.weekdayRate + "\t" + hotel.weekendRate + "\t" + hotel.weekdayLoyaltyRate
+                    + "\t" + hotel.weekendLoyaltyRate + "\t" + hotel.rating);
             }
         }
 
-        public Dictionary<Hotel, int> FindCheapHotel(DateTime startDate, DateTime endDate)
+
+        /// <summary>
+        /// Method to find the cheapest hotels in the list as per the date range
+        /// Does NOT considers ratings
+        /// </summary>
+        /// <param name="startDate">Start date of stay</param>
+        /// <param name="endDate">end date of stay</param>
+        /// <param name="type">customer type</param>
+        /// <returns>Dictionary containing cheapest hotel along with its price</returns>
+        public Dictionary<Hotel, int> FindCheapHotel(DateTime startDate, DateTime endDate, int type)
         {
             var cheapestHotelList = new Dictionary<Hotel, int>();
             if (startDate > endDate)
@@ -47,12 +71,12 @@ namespace HotelReservation
                 foreach (var hotel in hotelList)
                 {
                     var temp = cost;
-                    cost = Math.Min(cost, TotalCostCalculation(hotel, startDate, endDate));
+                    cost = Math.Min(cost, TotalCostCalculation(hotel, startDate, endDate, type));
 
                 }
                 foreach (var hotel in hotelList)
                 {
-                    if (TotalCostCalculation(hotel, startDate, endDate) == cost)
+                    if (TotalCostCalculation(hotel, startDate, endDate, type) == cost)
                         cheapestHotelList.Add(hotel, cost);
                 }
             }
@@ -60,9 +84,17 @@ namespace HotelReservation
         }
 
 
-        public Dictionary<Hotel, int> FindCheapestBestRatedHotel(DateTime startDate, DateTime endDate)
+        /// <summary>
+        /// Method to find the cheapest hotels in the list as per the date range
+        /// Does Considers RATING
+        /// </summary>
+        /// <param name="startDate">Start date of stay</param>
+        /// <param name="endDate">end date of stay</param>
+        /// <param name="type">customer type</param>
+        /// <returns>Dictionary containing cheapest hotel along with its price</returns>
+        public Dictionary<Hotel, int> FindCheapestBestRatedHotel(DateTime startDate, DateTime endDate, int type)
         {
-            var cheapestHotelsDict = FindCheapHotel(startDate, endDate);
+            var cheapestHotelsDict = FindCheapHotel(startDate, endDate, type);
             var cheapestBestRatedHotels = new Dictionary<Hotel, int>();
             var maxRating = 0;
             foreach (var kvp in cheapestHotelsDict)
@@ -73,11 +105,25 @@ namespace HotelReservation
             return cheapestBestRatedHotels;
         }
 
-        public int TotalCostCalculation(Hotel hotel, DateTime startDate, DateTime endDate)
+
+        /// <summary>
+        /// Method to calculate the total cost of stay
+        /// </summary>
+        /// <param name="hotel">Hotel Details</param>
+        /// <param name="startDate">Start date of stay</param>
+        /// <param name="endDate">end date of stay</param>
+        /// <param name="type">Customer Type</param>
+        /// <returns>Total Cost incurred</returns>
+        public int TotalCostCalculation(Hotel hotel, DateTime startDate, DateTime endDate, int type)
         {
             var totalCost = 0;
             var weekdayRate = hotel.weekdayRate;
             var weekendRate = hotel.weekendRate;
+            if (type == 1)
+            {
+                weekdayRate = hotel.weekdayLoyaltyRate;
+                weekendRate = hotel.weekendLoyaltyRate;
+            }
             for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
             {
                 if (date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday)
@@ -88,10 +134,14 @@ namespace HotelReservation
             return totalCost;
         }
 
+
+        /// <summary>
+        /// Lists ratings of all the hotels
+        /// </summary>
+        /// <returns>Integer List of ratings</returns>
         public List<int> RetrieveHotelRatings()
         {
             List<int> ratingList = new List<int>();
-            int i = 0;
             foreach (var hotel in hotelList)
             {
                 ratingList.Add(hotel.rating);
