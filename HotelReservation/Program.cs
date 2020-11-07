@@ -50,7 +50,7 @@ namespace HotelReservation
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate, type);
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate, Convert.ToString( type));
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
@@ -82,7 +82,7 @@ namespace HotelReservation
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, type);
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, Convert.ToString( type));
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
