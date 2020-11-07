@@ -59,6 +59,20 @@ namespace HotelReservation
             return cheapestHotelList;
         }
 
+
+        public Dictionary<Hotel, int> FindCheapestBestRatedHotel(DateTime startDate, DateTime endDate)
+        {
+            var cheapestHotelsDict = FindCheapHotel(startDate, endDate);
+            var cheapestBestRatedHotels = new Dictionary<Hotel, int>();
+            var maxRating = 0;
+            foreach (var kvp in cheapestHotelsDict)
+                maxRating = Math.Max(maxRating, kvp.Key.rating);
+            foreach (var kvp in cheapestHotelsDict)
+                if (kvp.Key.rating == maxRating)
+                    cheapestBestRatedHotels.Add(kvp.Key, kvp.Value);
+            return cheapestBestRatedHotels;
+        }
+
         public int TotalCostCalculation(Hotel hotel, DateTime startDate, DateTime endDate)
         {
             var totalCost = 0;

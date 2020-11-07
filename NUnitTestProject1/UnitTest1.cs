@@ -85,6 +85,30 @@ namespace NUnitTestProject1
 
         }
 
+        /// <summary>
+        /// Test case to check for correct output list of cheap hotels for weekdays & weekends
+        /// date range includes both weekdays and weekends
+        /// should return results considering ratings as well
+        /// </summary>
+        [Test]
+        public void GivenStartandEndDates_ShouldReturn_CheapestHotelForWeekendandWeekdaysRATINGS()
+        {
+            HotelManager manager = new HotelManager();
+            manager.CreateHotelList();
+
+            DateTime startDate = Convert.ToDateTime("11Sep2020");
+            DateTime endDate = Convert.ToDateTime("12Sep2020");
+
+            Dictionary<Hotel, int> actualCheapHotelList = new Dictionary<Hotel, int>();
+            actualCheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate);
+
+            Dictionary<Hotel, int> expectedCheapHotelList = new Dictionary<Hotel, int>();
+            expectedCheapHotelList.Add(new Hotel("Lakewood", 110, 90, 3), 200);
+            expectedCheapHotelList.Add(new Hotel("Bridgewood", 220, 150, 4), 200);
+
+            CollectionAssert.AreEquivalent(expectedCheapHotelList, actualCheapHotelList);
+        }
+
 
 
 

@@ -12,8 +12,8 @@ namespace HotelReservation
             bool val = true;
             while (val)
             {
-                Console.WriteLine("Choose among the following option\n1.Add Hotel\n2.Display Hotel\n3.Exit\n4.Find Cheapest Hotel" +
-                    "\n5.Retrieve Ratings");
+                Console.WriteLine("\nChoose among the following option\n1.Add Hotel\n2.Display Hotel\n3.Exit\n4.Find Cheapest Hotel" +
+                    "\n5.Retrieve Ratings\n6.Find Cheapest Hotel as per Ratings");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -60,6 +60,20 @@ namespace HotelReservation
                                 Console.Write(rating + "\t");
                             }
                             Console.WriteLine("\n");
+                            break;
+                        }
+
+                    case 6:
+                        {
+                            Console.WriteLine("Enter the startDate");
+                            DateTime startDate = Convert.ToDateTime(Console.ReadLine());
+                            Console.WriteLine("Enter the endDate");
+                            DateTime endDate = Convert.ToDateTime(Console.ReadLine());
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate);
+                            foreach (var kvp in cheapHotelList)
+                            {
+                                Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
+                            }
                             break;
                         }
 
