@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelReservation.HotelReservationSystem;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -162,5 +163,14 @@ namespace HotelReservation
         {
             return (Regex.IsMatch(customerType, rewardCustomerRegex) || Regex.IsMatch(customerType, regularCustomerRegex));
         }
+
+
+        //public bool ContentEquals<TKey, TValue>(Dictionary<TKey, TValue> dictionary, Dictionary<TKey, TValue> otherDictionary)
+        //{
+        //    return (otherDictionary ?? new Dictionary<TKey, TValue>())
+        //        .OrderBy(kvp => kvp.Key)
+        //        .SequenceEqual((dictionary ?? new Dictionary<TKey, TValue>())
+        //                           .OrderBy(kvp => kvp.Key));
+        //}
     }
 }

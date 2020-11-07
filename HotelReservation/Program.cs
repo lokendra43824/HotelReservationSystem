@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelReservation.HotelReservationSystem;
+using System;
 using System.Collections.Generic;
 
 namespace HotelReservation
@@ -40,9 +41,9 @@ namespace HotelReservation
 
                     case 4:     ////Take CustomerType,startDate and endDate inputs from user and call findCheapHotel method(NO ratings)
                         {
-                            Console.WriteLine("Enter 1 for Reward Customer and 0 for Regular Customer");
-                            int type = Convert.ToInt32(Console.ReadLine());
-                            if (type != 0 || type != 1)
+                            Console.WriteLine("Enter Customer Type");
+                            string type = Console.ReadLine();
+                            if (manager.ValidateCustomerType(type))
                             {
                                 throw new HotelException(HotelException.ExceptionType.INVALID_CUSTOMER_TYPE, "Invalid Customer Type");
                             }
@@ -50,7 +51,7 @@ namespace HotelReservation
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate, Convert.ToString( type));
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapHotel(startDate, endDate, type);
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
@@ -72,9 +73,9 @@ namespace HotelReservation
 
                     case 6:    ////Take CustomerType,startDate and endDate inputs from user and call findCheapHotel method(considering ratings)
                         {
-                            Console.WriteLine("Enter 1 for Reward Customer and 0 for Regular Customer");
-                            int type = Convert.ToInt32(Console.ReadLine());
-                            if (type != 0 || type != 1)
+                            Console.WriteLine("Enter Customer Type");
+                            string type = Console.ReadLine();
+                            if (manager.ValidateCustomerType(type))
                             {
                                 throw new HotelException(HotelException.ExceptionType.INVALID_CUSTOMER_TYPE, "Invalid Customer Type");
                             }
@@ -82,7 +83,7 @@ namespace HotelReservation
                             DateTime startDate = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter the endDate");
                             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
-                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, Convert.ToString( type));
+                            Dictionary<Hotel, int> cheapHotelList = manager.FindCheapestBestRatedHotel(startDate, endDate, type);
                             foreach (var kvp in cheapHotelList)
                             {
                                 Console.WriteLine("Cheapest Hotel will be: " + kvp.Key.hotelName + " with price $" + kvp.Value);
